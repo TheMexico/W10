@@ -1,0 +1,4 @@
+HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Search
+0 = Hidden
+1 = Show search or Cortana icon
+2 = Show search box
