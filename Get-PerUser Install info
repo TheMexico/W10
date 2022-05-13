@@ -1,0 +1,8 @@
+  # check for Process - firefox example
+Get-Process -Name fi*
+  
+  # Get logged in accounts
+$userProfiles = Get-WmiObject -ClassName Win32_UserProfile | Where-Object { ( $_.Special -ne 'Special' ) -AND ( $_.LocalPath -notLike "C:\Users\serviceA*" } | Select -ExpandProperty LocalPath )
+
+  # Search for expected file, -force includes hidden
+foreach ($user in $userProfiles) { Get-ChildItem -Path $user -Include "helper.exe" -Force -Recurse | Select -ExpandProperty FullName }
