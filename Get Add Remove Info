@@ -1,2 +1,1 @@
-Get-ItemProperty "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*", "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*" | where
-{ ($_.DisplayName-ne $nul) -and ($ _.DisplayName -like "*MyAppsName*") } | Sort DisplayName | Select DislayName, DisplayVersion, UninstallString
+Get-ItemProperty "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*", "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*" | where { ($_.DisplayName-ne $nul) -and ($_.DisplayName -like "*MyAppsName*") } | Sort DisplayName | Select DislayName, DisplayVersion, UninstallString
