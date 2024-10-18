@@ -1,0 +1,45 @@
+select disk 0
+clean
+convert gpt
+create partition efi size=300"
+format quick fs=fat32 label=System
+assign letter=N
+create partition msr size=128
+create partition primary
+format quick fs=ntfs label=Windows
+assign letter=O
+exit
+
+
+
+if ($config.UEFIMode) {
+    $diskPartCommands = @(
+        "select disk $($config.diskNumber)"
+        "clean"
+        "convert gpt"
+        "create partition efi size=300"
+        "format quick fs=fat32 label=`"System`""
+        "assign letter=`"N`""
+        "create partition msr size=128"
+        "create partition primary"
+        "format quick fs=ntfs label=`"Windows`""
+        "assign letter=`"O`""
+        "exit"
+    )
+    $diskPartCommands | diskpart.exe | write-output
+}
+else {
+    $diskPartCommands = @(
+        "select disk $($config.diskNumber)"
+        "clean"
+        "create partition primary size=100"
+        "format quick fs=ntfs label=`"System`""
+        "assign letter=`"N`""
+        "active"
+        "create partition primary"
+        "format quick fs=ntfs label=`"Windows`""
+        "assign letter=`"O`""
+        "exit"
+    )
+    $diskPartCommands | diskpart.exe | write-output
+}
