@@ -1,0 +1,23 @@
+# 0: The next policy request will be for a full policy instead of the change in policy since the last policy request.
+# 1: The existing policy will be purged completely.
+Param(
+    [Parameter(Mandatory=$true)]
+    [ValidateRange(0,1)][Int]$resetFlag = 1
+)
+ 
+Write-Output "Selected resetFlag: $resetFlag"
+if ($resetFlag -eq 0) {
+    Write-Output "The next policy request will be for a full policy instead of the change in policy since the last policy request."
+}
+ 
+elseif ($resetFlag -eq 1) {
+   Write-Output "The existing policy will be purged completely."
+}
+ 
+else {
+    Exit 1
+}
+ 
+$resetFlagCIM = Invoke-CimMethod -Namespace root\ccm -ClassName SMS_Client -MethodName ResetPolicy -Arguments @{ uFlags = ([UInt32]$resetFlag) }} 
+Sleep -Seconds 10
+$requestMacPol = Invoke-CimMethod -Namespace 'root\CCM' -ClassName SMS_Client -MethodName TriggerSchedule -Arguments @{sScheduleID='{00000000-0000-0000-0000-000000000021}'} # Trigger Request Machine Policy
