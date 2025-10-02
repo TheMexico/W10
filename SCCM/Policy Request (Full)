@@ -1,3 +1,8 @@
+<#
+Credit: Discord - WinAdmins - MDAWG
+
+#>
+
 # 0: The next policy request will be for a full policy instead of the change in policy since the last policy request.
 # 1: The existing policy will be purged completely.
 Param(
